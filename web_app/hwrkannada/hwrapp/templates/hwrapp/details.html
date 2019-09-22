@@ -1,0 +1,42 @@
+{% load static %}
+<html>
+<head>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="{% static 'hwrapp/materialize.min.css' %}">
+<!-- Compiled and minified JavaScript -->
+<script src="{% static 'hwrapp/materialize.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'hwrapp/style.css' %}" />
+
+</head>
+<body>
+<br>
+<br>
+<br>
+<div class = "container">
+	<div class = "row">
+			<div class = "col m2"></div>
+				<div class = "col s12 m8" style = 'height:auto;background: rgba(255,255,255,0.35)'>
+						{% block content %}
+						<center>
+						<br>
+						<form method="post" enctype="multipart/form-data">
+
+						{% csrf_token %}
+						<br>	
+							<div class = "col s12">
+								<img id="image" src="{{myobject.image_url.url}}" alt="{{myobject.image_url.url}}" style = 'width:100%'/>
+							</div>
+						<div>
+							<button type="submit" style="margin-top: 20px">Perform Analysis</button>			
+						</div>		
+					</form>
+					<br>
+					</center>
+					{% endblock %}
+				</div>
+			</div>
+	</div>		
+</div>
+</body>
+</html>        							
+

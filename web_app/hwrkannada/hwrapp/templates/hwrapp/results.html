@@ -1,0 +1,120 @@
+{% load static %}
+<!doctype html>
+<meta charset=utf-8>
+<title>Kannada test</title>
+
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="{% static 'hwrapp/materialize.min.css' %}">
+<!-- Compiled and minified JavaScript -->
+<script src="{% static 'hwrapp/materialize.min.js' %}"></script>
+<!-- <script type="text/javascript"> var fs = require('fs');</script> -->
+<link rel="stylesheet" type="text/css" href="{% static 'hwrapp/style.css' %}" />
+
+<style>
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskannada.css);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+body { font-family: "Noto Sans Kannada", sans-serif; font-size: 19.0px; line-height: 1.11em; }
+</style>
+
+<script type="text/javascript">
+
+	function downloadText(){
+		var content = document.getElementById("kannada-text").textContent;
+		content = content.replace(/(\r\n|\n|\r)/gm, "");
+		content = content.replace(/\t/g, ' ').replace(/ {2,}/g, '\n');
+		console.log(content);
+		var link = document.createElement('a');
+		mimeType = 'text/plain';
+		filename = 'kannada-text.txt'
+		link.setAttribute('download', filename);
+		link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(content));
+		link.click(); 
+	} 
+
+	function Outputer(){ //this function will work when Translate is pressed it is supposed to do dictionary comparision
+		var content = document.getElementById("kannada-text").textContent;
+		content = content.replace(/(\r\n|\n|\r)/gm, "");
+		content = content.replace(/\t/g, ' ').replace(/ {2,}/g, '\n'); 
+		document.getElementById("English-text").innerHTML = "Information";//here the inner html should be = to english output
+
+	}
+
+	document.onkeydown = function(e) {
+		switch (e.keyCode) {
+    	//left
+    	case 37:
+    	window.location.href = "/hwrapp/results/augmentation/{{image_id}}"
+    	break;
+        //up
+        case 38:
+        window.location.href = "/hwrapp"
+        break;
+        //right
+        case 39:
+        window.location.href = "/hwrapp/results/test/{{image_id}}"
+    	}
+
+	};  
+
+
+
+</script>
+
+<body>
+	<br>
+	<br>
+	<br>
+	<div class = "container z-depth-2 grey lighten-2" style = 'margin-bottom:50px' >
+		<div class = "row">
+			<center>
+				<div class = "col s12 m6  " style = 'height:auto;margin-top:8px'>
+					<center>
+						<div class = "col s12">
+							<img id="image" src="{{myobject.image_url.url}}" alt="{{myobject.image_url.url}}" style = 'width:100%'/>
+						</div>
+					</center>
+				</div>
+				<div class = "col s12 m6" style = 'height:auto' id = "result">
+					<center>
+						<div id="kannada-text">
+							<br>
+							<br>
+							{% if output %}
+							{% for line in output %}
+
+							{{line}}
+							<br>
+							<br>
+
+							{% endfor %}
+
+							{% else %}
+							<p>No output</p>
+							{% endif %}
+							<br>
+						</div>
+						
+						<div style="height: auto;padding-bottom: 20px;">
+							<br>
+							{% if read_test %}
+								{% for l in read_test %}
+									{{l}}
+								{% endfor %}
+							{% else %}
+							<p id="English-text">
+								No Output
+							</p>
+							{% endif %}
+						</div>
+						
+
+						<a class="waves-effect waves-light btn" onclick="downloadText()" style="margin-bottom: 10px"><i class="material-icons left"></i>Translate Text</a>
+						<!-- <a class="waves-effect waves-light btn" onclick="Outputer()" style="margin-bottom: 10px"><i class="material-icons left"></i>Translate</a>
+ -->
+					</center>
+				</div>
+			</center>
+		</div>
+	</div>
+</body> 
+</html>

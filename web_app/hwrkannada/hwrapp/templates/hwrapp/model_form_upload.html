@@ -1,0 +1,36 @@
+{% load static %}
+<html>
+<head>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="{% static 'hwrapp/materialize.min.css' %}">
+<!-- Compiled and minified JavaScript -->
+<script src="{% static 'hwrapp/materialize.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'hwrapp/style.css' %}" />
+
+</head>
+<body>
+	<br>
+	<br>
+	<br>
+	<div class = "container">
+		<div class = "row">
+			<div class = "col m3"></div>
+
+			<div class = "col s12 m6 grey lighten-2">
+				{% block content %}
+				<h2>Upload an Image</h2>
+				<br>
+				<form method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{ form.as_p }}
+					<br>	
+					<img id="image" />
+					<button type="submit">Upload</button>
+				</form>
+				<br>
+				{% endblock %}
+			</div>
+		</div>
+	</div>		
+</body>        							
+</html>
